@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CommandSW implements CommandExecutor, TabCompleter {
+public class CommandSL implements CommandExecutor, TabCompleter {
 	private String[] Commands = {"on", "off"};
 
 	@Override
@@ -28,20 +28,20 @@ public class CommandSW implements CommandExecutor, TabCompleter {
 		}
 
 		if(args.length == 0) {
-			if (Main.sw) {
-				Main.sw(false);
-				Bukkit.broadcastMessage(MESSAGE.SW_OFF);
+			if (Main.sl) {
+				Main.sl(false);
+				Bukkit.broadcastMessage(MESSAGE.SL_OFF);
 			} else {
-				Main.sw(true);
-				Bukkit.broadcastMessage(MESSAGE.SW_ON);
+				Main.sl(true);
+				Bukkit.broadcastMessage(MESSAGE.SL_ON);
 			}
 		} else {
 			if(args[0].equalsIgnoreCase("on")){
-				Main.sw(true);
-				Bukkit.broadcastMessage(MESSAGE.SW_ON);
+				Main.sl(true);
+				Bukkit.broadcastMessage(MESSAGE.SL_ON);
 			} else if(args[0].equalsIgnoreCase("off")){
-				Main.sw(false);
-				Bukkit.broadcastMessage(MESSAGE.SW_OFF);
+				Main.sl(false);
+				Bukkit.broadcastMessage(MESSAGE.SL_OFF);
 			}
 		}
 		return true;
