@@ -1,0 +1,13 @@
+name: StopWaters
+version: 1.0.0
+main: osu.koume.stopwaters.Main
+commands:
+  sw:
+    description: stopwater
+    usage: /<command>
+  sl:
+    description: stopladder
+    usage: /<command>
+  sv:
+    description: stopvine
+    usage: /<command>
