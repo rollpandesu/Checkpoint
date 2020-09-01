@@ -1,4 +1,4 @@
-package osu.koume.stopwaters.temp;
+package osu.koume.checkpoint.temp;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
