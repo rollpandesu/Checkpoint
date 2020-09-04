@@ -25,7 +25,6 @@ public class CustomConfig {
 	public CustomConfig(Plugin plugin, String fileName) {
 		this.plugin = plugin;
 		this.file = fileName;
-		System.out.println(plugin + " | " + fileName);
 		configFile = new File(plugin.getDataFolder(), file);
 	}
 

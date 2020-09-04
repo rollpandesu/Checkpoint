@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import osu.koume.checkpoint.temp.CustomConfig;
@@ -26,26 +27,37 @@ public class EventManager implements Listener {
 				Sign s = (Sign) b.getState();
 				if (s.getLine(0).equalsIgnoreCase("cp")) {
 					setCheckpoint(e.getPlayer());
+					e.setCancelled(true);
+					return;
 				}
 			}
 
-			checkItem(e.getPlayer());
+			e.setCancelled(checkItem(e.getPlayer()));
 
 		} else if (e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-			checkItem(e.getPlayer());
+			e.setCancelled(checkItem(e.getPlayer()));
 		}
 	}
 
-	private void checkItem(Player p) {
+	private boolean checkItem(Player p) {
 		ItemStack i = p.getInventory().getItemInMainHand();
-		if (i != null && i.getType().equals(Material.FEATHER)) {
+		if (i == null) {
+			return false;
+		}
+
+		if (i.getType().equals(Material.FEATHER)) {
 			Location loc = getCheckpoint(p);
-			if(loc != null){
+			if (loc != null) {
 				p.teleport(loc);
 			} else {
 				p.sendMessage(MESSAGE.NO_CP);
 			}
+			return true;
+		} else if (i.getType().equals(Material.SULPHUR)) {
+			setCheckpoint(p);
+			return true;
 		}
+		return false;
 	}
 
 	private Location getCheckpoint(Player p) {
@@ -59,6 +71,14 @@ public class EventManager implements Listener {
 		c.saveConfig();
 		p.sendMessage(MESSAGE.SET_CP);
 		p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+	}
+
+	@EventHandler
+	public void onEntityDamage(EntityDamageEvent e) {
+		if (e.getEntity() instanceof Player) {
+			e.setCancelled(e.getCause().equals(EntityDamageEvent.DamageCause.FALL));
+		}
+
 	}
 
 }
